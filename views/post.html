@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post - Professional Blog</title>
+    <meta name="description" content="Read the latest article on Professional Blog">
+    <link rel="stylesheet" href="/css/style-new.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-feather-alt"></i>
+                    <a href="/">Professional Blog</a>
+                </div>
+                <div class="nav-links">
+                    <a href="/" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                    <a href="/categories.html" class="nav-link">
+                        <i class="fas fa-tags"></i>
+                        Categories
+                    </a>
+                    <a href="/about.html" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        About
+                    </a>
+                    <div class="nav-dropdown">
+                        <a href="#" class="nav-link admin-link" onclick="handleAdminAccess(event)">
+                            <i class="fas fa-cog"></i>
+                            Admin
+                            <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="/adminLogin.html" class="dropdown-item">
+                                <i class="fas fa-sign-in-alt"></i>
+                                Login
+                            </a>
+                            <a href="/admin/dashboard" class="dropdown-item" id="dashboardLink" style="display: none;">
+                                <i class="fas fa-tachometer-alt"></i>
+                                Dashboard
+                            </a>
+                            <a href="#" class="dropdown-item" id="logoutLink" style="display: none;" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="post-hero">
+            <div class="container">
+                <nav class="breadcrumb">
+                    <a href="/"><i class="fas fa-home"></i> Home</a>
+                    <span class="breadcrumb-separator"><i class="fas fa-chevron-right"></i></span>
+                    <span class="breadcrumb-current">Article</span>
+                </nav>
+            </div>
+        </div>
+
+        <div class="post-container">
+            <div class="post-sidebar">
+                <div class="sidebar-widget">
+                    <h3><i class="fas fa-share-alt"></i> Share Article</h3>
+                    <div class="share-buttons">
+                        <button class="share-btn twitter" onclick="shareOnTwitter()">
+                            <i class="fab fa-twitter"></i>
+                            Twitter
+                        </button>
+                        <button class="share-btn facebook" onclick="shareOnFacebook()">
+                            <i class="fab fa-facebook"></i>
+                            Facebook
+                        </button>
+                        <button class="share-btn linkedin" onclick="shareOnLinkedIn()">
+                            <i class="fab fa-linkedin"></i>
+                            LinkedIn
+                        </button>
+                        <button class="share-btn copy" onclick="copyToClipboard()">
+                            <i class="fas fa-link"></i>
+                            Copy Link
+                        </button>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3><i class="fas fa-list"></i> Table of Contents</h3>
+                    <div class="toc" id="tableOfContents">
+                        <!-- Generated dynamically -->
+                    </div>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3><i class="fas fa-thumbs-up"></i> Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button class="action-btn" onclick="toggleBookmark()">
+                            <i class="fas fa-bookmark"></i>
+                            Bookmark
+                        </button>
+                        <button class="action-btn" onclick="printArticle()">
+                            <i class="fas fa-print"></i>
+                            Print
+                        </button>
+                        <button class="action-btn" onclick="increaseFontSize()">
+                            <i class="fas fa-text-height"></i>
+                            Text Size
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-main">
+                <article class="post-article" id="postArticle">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading article...</p>
+                    </div>
+                </article>
+
+                <div class="post-navigation">
+                    <div class="nav-prev" id="prevPost">
+                        <!-- Previous post link -->
+                    </div>
+                    <div class="nav-next" id="nextPost">
+                        <!-- Next post link -->
+                    </div>
+                </div>
+
+                <section class="related-posts">
+                    <h3><i class="fas fa-layer-group"></i> Related Articles</h3>
+                    <div class="related-grid" id="relatedPosts">
+                        <!-- Related posts will be loaded here -->
+                    </div>
+                </section>
+
+                <section class="comments-section">
+                    <div class="comments-header">
+                        <h3><i class="fas fa-comments"></i> Discussion</h3>
+                        <div class="comments-stats" id="commentsStats">
+                            <span id="commentsCount">0</span> comments
+                        </div>
+                    </div>
+                    
+                    <form class="comment-form" id="commentForm">
+                        <div class="form-header">
+                            <h4><i class="fas fa-plus-circle"></i> Join the Discussion</h4>
+                            <p>Share your thoughts and engage with our community</p>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="commentName">
+                                    <i class="fas fa-user"></i>
+                                    Your Name *
+                                </label>
+                                <input type="text" id="commentName" placeholder="Enter your name" required>
+                            </div>
+                            <div class="form-group half">
+                                <label for="commentEmail">
+                                    <i class="fas fa-envelope"></i>
+                                    Email Address *
+                                </label>
+                                <input type="email" id="commentEmail" placeholder="your@email.com" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="commentContent">
+                                <i class="fas fa-comment"></i>
+                                Your Comment *
+                            </label>
+                            <textarea id="commentContent" placeholder="Share your thoughts..." required rows="5"></textarea>
+                            <div class="textarea-footer">
+                                <span class="char-count" id="charCount">0/500</span>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary comment-submit">
+                            <i class="fas fa-paper-plane"></i>
+                            Post Comment
+                        </button>
+                    </form>
+
+                    <div class="comments-list" id="commentsList">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading comments...</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-feather-alt"></i>
+                        <span>Professional Blog</span>
+                    </div>
+                    <p class="footer-desc">
+                        A platform for sharing knowledge, insights, and innovative ideas in technology and beyond.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="RSS Feed"><i class="fas fa-rss"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/categories.html">Categories</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/adminLogin.html">Admin</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/categories.html?category=technology">Technology</a></li>
+                        <li><a href="/categories.html?category=development">Development</a></li>
+                        <li><a href="/categories.html?category=business">Business</a></li>
+                        <li><a href="/categories.html?category=design">Design</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-envelope"></i> hello@professionalblog.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> San Francisco, CA</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Professional Blog. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+    <script>
+        // Load post when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSinglePost();
+            loadComments();
+        });
+    </script>
+</body>
+</html>

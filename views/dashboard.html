@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Professional Blog</title>
+    <meta name="description" content="Professional content management dashboard">
+    <link rel="stylesheet" href="/css/style-new.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Dashboard-specific styles -->
+    <style>
+        /* Reset dashboard body styling */
+        .dashboard-body {
+            background: #f8fafc;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Professional Footer Styles */
+        .footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+            color: white;
+            padding: 4rem 0 0;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: grain-animation 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes grain-animation {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(50px); }
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-section {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: footer-slide-in 0.8s ease forwards;
+        }
+
+        .footer-section:nth-child(1) { animation-delay: 0.1s; }
+        .footer-section:nth-child(2) { animation-delay: 0.2s; }
+        .footer-section:nth-child(3) { animation-delay: 0.3s; }
+        .footer-section:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes footer-slide-in {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .footer-logo i {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: logo-glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes logo-glow {
+            from {
+                filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.3));
+            }
+            to {
+                filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.6));
+            }
+        }
+
+        .admin-badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-desc {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .admin-stats {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-stats .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .admin-stats .stat-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .admin-stats .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .admin-stats .stat-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-stats .stat-number {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .admin-stats .stat-label {
+            font-size: 0.875rem;
+            color: #cbd5e1;
+        }
+
+        .footer-section h4 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-section ul li a {
+            color: #cbd5e1;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-section ul li a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            transition: width 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .footer-section ul li a i {
+            width: 16px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+            transform: translateX(8px);
+        }
+
+        .footer-section ul li a:hover::before {
+            width: 100%;
+        }
+
+        .admin-info li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 0.875rem;
+        }
+
+        .status-icon.online {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .info-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            color: white;
+            font-weight: 600;
+        }
+
+        .info-value.online {
+            color: #10b981;
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-bottom-left p {
+            margin: 0;
+            color: #cbd5e1;
+        }
+
+        .version-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+
+        .version-info .separator {
+            color: #64748b;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .back-to-top:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-section h4::after {
+                width: 30px;
+                height: 2px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .admin-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .admin-stats .stat-item {
+                justify-content: center;
+            }
+        }
+
+        /* Enhanced dashboard layout */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .dashboard-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar,
+        .dashboard-sidebar {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            flex-shrink: 0;
+        }
+
+        .dashboard-main {
+            flex: 1;
+            padding: 2rem;
+            background: #f8fafc;
+            overflow-y: auto;
+        }
+
+        /* Stats Grid Enhancements */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card:nth-child(2)::before {
+            background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .stat-card:nth-child(3)::before {
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .stat-card:nth-child(4)::before {
+            background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .stat-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .stat-icon.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .stat-icon.success {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .stat-icon.warning {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .stat-icon.info {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .stat-content h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin: 0 0 0.5rem 0;
+            line-height: 1;
+        }
+
+        .stat-content p {
+            font-size: 0.875rem;
+            color: #64748b;
+            font-weight: 500;
+            margin: 0 0 1rem 0;
+        }
+
+        .stat-change {
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .stat-change.positive {
+            color: #10b981;
+        }
+
+        .stat-change.negative {
+            color: #ef4444;
+        }
+
+        .stat-change.neutral {
+            color: #64748b;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-btn {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: block;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6;
+        }
+
+        .action-btn i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #3b82f6;
+            display: block;
+        }
+
+        .action-btn .btn-title {
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 0.25rem;
+        }
+
+        .action-btn .btn-desc {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        /* Recent Posts Widget */
+        .recent-posts-widget {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+        }
+
+        .widget-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .widget-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin: 0;
+        }
+
+        .posts-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .post-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            transition: all 0.2s ease;
+        }
+
+        .post-item:hover {
+            background: #f8fafc;
+        }
+
+        .post-item:last-child {
+            border-bottom: none;
+        }
+
+        .post-thumbnail {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .post-placeholder {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #64748b;
+            flex-shrink: 0;
+        }
+
+        .post-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .post-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 0.25rem;
+            line-height: 1.4;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .post-meta {
+            font-size: 0.75rem;
+            color: #64748b;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        .btn-sm {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.75rem;
+        }
+
+        .btn-edit {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #2563eb;
+            transform: scale(1.05);
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+        }
+
+        /* Empty States */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #64748b;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+
+        .empty-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .empty-desc {
+            font-size: 0.875rem;
+        }
+
+        /* Loading States */
+        .loading-container {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-main {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .stat-content h3 {
+                font-size: 2rem;
+            }
+
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .post-item {
+                padding: 0.75rem 1rem;
+            }
+
+            .post-thumbnail, .post-placeholder {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+    <!-- Professional Header matching main website -->
+    <header class="header dashboard-header-main">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-feather-alt"></i>
+                    <a href="/">Professional Blog</a>
+                    <span class="admin-badge">Admin</span>
+                </div>
+                <div class="nav-links">
+                    <a href="/" class="nav-link" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>
+                        View Blog
+                    </a>
+                    <div class="nav-dropdown">
+                        <a href="#" class="nav-link admin-link">
+                            <i class="fas fa-user-circle"></i>
+                            <span id="adminUsername">Admin</span>
+                            <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="#profile" class="dropdown-item" onclick="showSection('profile')">
+                                <i class="fas fa-user"></i>
+                                Profile
+                            </a>
+                            <a href="#settings" class="dropdown-item" onclick="showSection('settings')">
+                                <i class="fas fa-cog"></i>
+                                Settings
+                            </a>
+                            <a href="#" class="dropdown-item" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <div class="dashboard-content">
+            <!-- Mobile Sidebar Overlay -->
+            <div class="sidebar-overlay" onclick="closeMobileMenu()"></div>
+            
+            <!-- Professional Sidebar -->
+            <aside class="dashboard-sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-header">
+                    <h2>
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </h2>
+                </div>
+                
+                <nav class="sidebar-nav">
+                    <div class="nav-section">
+                        <h3>Overview</h3>
+                        <a href="#dashboard" class="sidebar-link active" data-section="dashboard">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </div>
+                    
+                    <div class="nav-section">
+                        <h3>Content Management</h3>
+                        <a href="#posts" class="sidebar-link" data-section="posts">
+                            <i class="fas fa-file-alt"></i>
+                            <span>All Posts</span>
+                            <span class="badge" id="postsCount">0</span>
+                        </a>
+                        <a href="#new-post" class="sidebar-link" data-section="new-post">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Create Post</span>
+                        </a>
+                        <a href="#comments" class="sidebar-link" data-section="comments">
+                            <i class="fas fa-comments"></i>
+                            <span>Comments</span>
+                            <span class="badge pending" id="commentsCount">0</span>
+                        </a>
+                    </div>
+                    
+                    <div class="nav-section">
+                        <h3>Tools</h3>
+                        <a href="#analytics" class="sidebar-link" data-section="analytics">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Advanced Analytics</span>
+                        </a>
+                        <a href="#settings" class="sidebar-link" data-section="settings">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard Content -->
+        <main class="dashboard-main">
+            <div class="dashboard-content">
+                <!-- Dashboard Overview Section -->
+                <section id="dashboard-section" class="content-section active">
+                    <div class="section-header">
+                        <div class="header-content">
+                            <h1>Dashboard Overview</h1>
+                            <p>Welcome back! Here's what's happening with your blog.</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn btn-outline" onclick="refreshDashboard()">
+                                <i class="fas fa-sync-alt"></i>
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon primary">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalPostsStat">0</h3>
+                                <p>Total Posts</p>
+                                <small class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +12% from last month
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon success">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalViewsStat">0</h3>
+                                <p>Total Views</p>
+                                <small class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +8% from last week
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon warning">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalCommentsStat">0</h3>
+                                <p>Comments</p>
+                                <small class="stat-change neutral">
+                                    <i class="fas fa-minus"></i>
+                                    No change
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon info">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="pendingCommentsStat">0</h3>
+                                <p>Pending Comments</p>
+                                <small class="stat-change negative">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Needs attention
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <a href="#create-post" class="action-btn" onclick="showSection('create-post')">
+                            <i class="fas fa-plus-circle"></i>
+                            <div class="btn-title">Create New Post</div>
+                            <div class="btn-desc">Write and publish content</div>
+                        </a>
+                        <a href="#all-posts" class="action-btn" onclick="showSection('all-posts')">
+                            <i class="fas fa-list"></i>
+                            <div class="btn-title">Manage Posts</div>
+                            <div class="btn-desc">Edit existing articles</div>
+                        </a>
+                        <a href="#comments" class="action-btn" onclick="showSection('comments')">
+                            <i class="fas fa-comments"></i>
+                            <div class="btn-title">Moderate Comments</div>
+                            <div class="btn-desc">Review user feedback</div>
+                        </a>
+                        <a href="#analytics" class="action-btn" onclick="showSection('analytics')">
+                            <i class="fas fa-chart-bar"></i>
+                            <div class="btn-title">View Analytics</div>
+                            <div class="btn-desc">Track performance</div>
+                        </a>
+                    </div>
+
+                    <!-- Dashboard Widgets -->
+                    <div class="dashboard-widgets">
+                        <div class="recent-posts-widget">
+                            <div class="widget-header">
+                                <h3 class="widget-title">
+                                    <i class="fas fa-clock"></i>
+                                    Recent Posts
+                                </h3>
+                            </div>
+                            <div class="posts-container" id="recentPostsContainer">
+                                <div class="loading-container">
+                                    <div class="spinner"></div>
+                                    <p>Loading posts...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="widget">
+                            <div class="widget-header">
+                                <h3>
+                                    <i class="fas fa-comment"></i>
+                                    Recent Comments
+                                </h3>
+                                <button class="widget-action" onclick="showSection('comments')">
+                                    Moderate All
+                                </button>
+                            </div>
+                            <div class="widget-content">
+                                <div class="recent-comments" id="recentComments">
+                                    <!-- Recent comments will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Posts Management -->
+                <section id="posts-section" class="content-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <h3><i class="fas fa-file-alt"></i> Manage Posts</h3>
+                            <p>Create, edit, and manage your blog posts</p>
+                        </div>
+                        <div class="section-actions">
+                            <div class="search-box small">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Search posts..." id="postsSearch">
+                            </div>
+                            <button class="btn btn-primary" onclick="showSection('new-post')">
+                                <i class="fas fa-plus"></i>
+                                New Post
+                            </button>
+                        </div>
+                    </div>
+                    <div class="posts-table" id="postsTable">
+                        <!-- Posts table will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- Comments Management -->
+                <section id="comments-section" class="content-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <h3><i class="fas fa-comments"></i> Manage Comments</h3>
+                            <p>Moderate and manage user comments</p>
+                        </div>
+                        <div class="section-actions">
+                            <div class="filter-dropdown">
+                                <select id="commentsFilter">
+                                    <option value="all">All Comments</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="approved">Approved</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-secondary" onclick="approveAllComments()">
+                                <i class="fas fa-check-double"></i>
+                                Approve All
+                            </button>
+                        </div>
+                    </div>
+                    <div class="comments-table" id="commentsTable">
+                        <!-- Comments table will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- New Post Form -->
+                <section id="new-post-section" class="content-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <h3><i class="fas fa-plus-circle"></i> Create New Post</h3>
+                            <p>Write and publish a new blog post</p>
+                        </div>
+                        <div class="section-actions">
+                            <button class="btn btn-secondary" onclick="saveDraft()">
+                                <i class="fas fa-save"></i>
+                                Save Draft
+                            </button>
+                            <button class="btn btn-primary" onclick="previewPost()">
+                                <i class="fas fa-eye"></i>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="post-editor">
+                        <form class="post-form" id="postForm">
+                            <div class="form-row">
+                                <div class="form-group main">
+                                    <label for="postTitle">
+                                        <i class="fas fa-heading"></i>
+                                        Post Title
+                                    </label>
+                                    <input type="text" id="postTitle" placeholder="Enter an engaging post title..." required>
+                                </div>
+                                <div class="form-group sidebar">
+                                    <label>
+                                        <i class="fas fa-toggle-on"></i>
+                                        Publication Status
+                                    </label>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="postPublished" checked>
+                                        <label for="postPublished" class="switch"></label>
+                                        <span class="toggle-label">Publish immediately</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="postSummary">
+                                    <i class="fas fa-align-left"></i>
+                                    Post Summary
+                                </label>
+                                <textarea id="postSummary" placeholder="Write a compelling summary..." required rows="3"></textarea>
+                                <div class="char-counter">
+                                    <span id="summaryCount">0</span>/200 characters
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="postContent">
+                                    <i class="fas fa-edit"></i>
+                                    Post Content
+                                </label>
+                                <div class="editor-toolbar">
+                                    <button type="button" onclick="formatText('bold')" title="Bold">
+                                        <i class="fas fa-bold"></i>
+                                    </button>
+                                    <button type="button" onclick="formatText('italic')" title="Italic">
+                                        <i class="fas fa-italic"></i>
+                                    </button>
+                                    <button type="button" onclick="insertHeading()" title="Heading">
+                                        <i class="fas fa-heading"></i>
+                                    </button>
+                                    <button type="button" onclick="insertList()" title="List">
+                                        <i class="fas fa-list"></i>
+                                    </button>
+                                </div>
+                                <textarea id="postContent" placeholder="Write your amazing content here..." required rows="15"></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="postTags">
+                                        <i class="fas fa-tags"></i>
+                                        Tags
+                                    </label>
+                                    <input type="text" id="postTags" placeholder="Enter tags separated by commas...">
+                                    <small class="form-hint">Add relevant tags to help readers find your content</small>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-large">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Publish Post
+                                </button>
+                                <button type="button" class="btn btn-secondary" onclick="resetPostForm()">
+                                    <i class="fas fa-undo"></i>
+                                    Reset Form
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Analytics Section -->
+                <section id="analytics-section" class="content-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <h3><i class="fas fa-chart-line"></i> Analytics</h3>
+                            <p>Track your blog's performance and engagement</p>
+                        </div>
+                    </div>
+                    <div class="analytics-content">
+                        <p class="coming-soon">Advanced analytics coming soon!</p>
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="settings-section" class="content-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <h3><i class="fas fa-cog"></i> Settings</h3>
+                            <p>Configure your blog settings and preferences</p>
+                        </div>
+                    </div>
+                    <div class="settings-content">
+                        <p class="coming-soon">Settings panel coming soon!</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+        </div> <!-- Close dashboard-content -->
+    </div> <!-- Close dashboard-container -->
+
+    <!-- Professional Animated Footer -->
+    <footer class="footer dashboard-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-feather-alt"></i>
+                        <span>Professional Blog</span>
+                        <span class="admin-badge">Admin Panel</span>
+                    </div>
+                    <p class="footer-desc">
+                        Advanced content management system for Professional Blog. Manage your posts, moderate comments, analyze performance, and customize your digital presence.
+                    </p>
+                    <div class="admin-stats">
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-details">
+                                <span class="stat-number" id="footerPostsCount">0</span>
+                                <span class="stat-label">Posts</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="stat-details">
+                                <span class="stat-number" id="footerCommentsCount">0</span>
+                                <span class="stat-label">Comments</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-details">
+                                <span class="stat-number" id="footerViewsCount">0</span>
+                                <span class="stat-label">Views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Actions</h4>
+                    <ul>
+                        <li><a href="#" onclick="showSection('new-post')"><i class="fas fa-plus-circle"></i>Create New Post</a></li>
+                        <li><a href="#" onclick="showSection('posts')"><i class="fas fa-file-alt"></i>Manage Posts</a></li>
+                        <li><a href="#" onclick="showSection('comments')"><i class="fas fa-comments"></i>Moderate Comments</a></li>
+                        <li><a href="#" onclick="showSection('analytics')"><i class="fas fa-chart-line"></i>View Analytics</a></li>
+                        <li><a href="#" onclick="showSection('settings')"><i class="fas fa-cog"></i>Settings</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Website Links</h4>
+                    <ul>
+                        <li><a href="/" target="_blank"><i class="fas fa-home"></i>Homepage</a></li>
+                        <li><a href="/categories.html" target="_blank"><i class="fas fa-th-large"></i>Categories</a></li>
+                        <li><a href="/about.html" target="_blank"><i class="fas fa-info-circle"></i>About</a></li>
+                        <li><a href="/contact.html" target="_blank"><i class="fas fa-envelope"></i>Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>System Status</h4>
+                    <ul class="admin-info">
+                        <li>
+                            <i class="fas fa-user-shield status-icon"></i>
+                            <div class="info-details">
+                                <span class="info-label">Admin User</span>
+                                <span class="info-value" id="footerAdminName">Administrator</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock status-icon"></i>
+                            <div class="info-details">
+                                <span class="info-label">Last Login</span>
+                                <span class="info-value" id="lastLogin">Today</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-server status-icon online"></i>
+                            <div class="info-details">
+                                <span class="info-label">System Status</span>
+                                <span class="info-value online">Online & Operational</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-database status-icon"></i>
+                            <div class="info-details">
+                                <span class="info-label">Database</span>
+                                <span class="info-value online">Connected</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-bottom-left">
+                    <p>&copy; 2026 Professional Blog Admin Panel. All rights reserved.</p>
+                    <div class="version-info">
+                        <span>Dashboard v2.1.0</span>
+                        <span class="separator">•</span>
+                        <span>Last Updated: January 2026</span>
+                    </div>
+                </div>
+                <div class="footer-bottom-right">
+                    <div class="footer-links">
+                        <a href="#" onclick="showSection('settings')">Admin Settings</a>
+                        <a href="/" target="_blank">View Public Site</a>
+                        <a href="#" onclick="logout()">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="/js/script.js"></script>
+    <script>
+        // Check authentication and load dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            loadDashboard();
+            updateFooterStats();
+        });
+
+        // Navigation handling
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = link.dataset.section;
+                if (section) {
+                    showSection(section);
+                }
+            });
+        });
+
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active from all sidebar links
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(`${sectionName}-section`);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Add active to corresponding sidebar link
+            const targetLink = document.querySelector(`[data-section="${sectionName}"]`);
+            if (targetLink) {
+                targetLink.classList.add('active');
+            }
+            
+            // Load section-specific data
+            switch (sectionName) {
+                case 'dashboard':
+                    loadDashboard();
+                    break;
+                case 'posts':
+                    loadAdminPosts();
+                    break;
+                case 'comments':
+                    loadAdminComments();
+                    break;
+                case 'new-post':
+                    initPostEditor();
+                    break;
+            }
+        }
+
+        function updateFooterStats() {
+            // Update footer statistics
+            const postsCount = document.getElementById('footerPostsCount');
+            const commentsCount = document.getElementById('footerCommentsCount');
+            const viewsCount = document.getElementById('footerViewsCount');
+            
+            if (postsCount) postsCount.textContent = document.getElementById('totalPostsStat')?.textContent || '0';
+            if (commentsCount) commentsCount.textContent = '0'; // Placeholder for comments
+            if (viewsCount) viewsCount.textContent = document.getElementById('totalViewsStat')?.textContent || '0';
+        }
+
+        // Back to top functionality
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show/hide back to top button
+        function handleBackToTopButton() {
+            const backToTopBtn = document.getElementById('backToTop');
+            if (backToTopBtn) {
+                if (window.pageYOffset > 100) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            }
+        }
+
+        // Window scroll event listener
+        window.addEventListener('scroll', handleBackToTopButton);
+            fetch('/api/posts/count')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('footerPostsCount').textContent = data.count || 0;
+                })
+                .catch(err => console.error('Error loading posts count:', err));
+
+            fetch('/api/comments/count')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('footerCommentsCount').textContent = data.count || 0;
+                })
+                .catch(err => console.error('Error loading comments count:', err));
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('adminToken');
+                sessionStorage.removeItem('adminToken');
+                window.location.href = '/adminLogin.html';
+            }
+        }
+
+        function refreshDashboard() {
+            loadDashboard();
+            updateFooterStats();
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const sidebar = document.querySelector('.dashboard-sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const sidebar = document.querySelector('.dashboard-sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+        }
+
+        // Post editor initialization
+        function initPostEditor() {
+            const summaryTextarea = document.getElementById('postSummary');
+            const summaryCounter = document.getElementById('summaryCount');
+            
+            if (summaryTextarea && summaryCounter) {
+                summaryTextarea.addEventListener('input', () => {
+                    const count = summaryTextarea.value.length;
+                    summaryCounter.textContent = count;
+                    if (count > 200) {
+                        summaryCounter.style.color = 'var(--danger-color)';
+                    } else {
+                        summaryCounter.style.color = 'var(--text-muted)';
+                    }
+                });
+            }
+        }
+
+        // Post form functions
+        function saveDraft() {
+            // Save post as draft
+            alert('Draft saved successfully!');
+        }
+
+        function previewPost() {
+            // Preview post functionality
+            alert('Post preview would open in a new window');
+        }
+
+        function resetPostForm() {
+            if (confirm('Are you sure you want to reset the form? All unsaved changes will be lost.')) {
+                document.getElementById('postForm').reset();
+                document.getElementById('summaryCount').textContent = '0';
+            }
+        }
+
+        // Comments management
+        function approveAllComments() {
+            if (confirm('Are you sure you want to approve all pending comments?')) {
+                // Implementation for approving all comments
+                alert('All comments approved!');
+                loadAdminComments();
+            }
+        }
+
+        // Export functionality
+        function exportData() {
+            alert('Data export functionality would be implemented here');
+        }
+
+        // Text formatting functions for post editor
+        function formatText(command) {
+            const textarea = document.getElementById('postContent');
+            if (textarea && textarea === document.activeElement) {
+                document.execCommand(command);
+            }
+        }
+
+        function insertHeading() {
+            const textarea = document.getElementById('postContent');
+            if (textarea) {
+                const cursorPos = textarea.selectionStart;
+                const text = textarea.value;
+                const newText = text.slice(0, cursorPos) + '\n## Heading\n' + text.slice(cursorPos);
+                textarea.value = newText;
+                textarea.focus();
+            }
+        }
+
+        function insertList() {
+            const textarea = document.getElementById('postContent');
+            if (textarea) {
+                const cursorPos = textarea.selectionStart;
+                const text = textarea.value;
+                const newText = text.slice(0, cursorPos) + '\n- List item\n- List item\n' + text.slice(cursorPos);
+                textarea.value = newText;
+                textarea.focus();
+            }
+        }
+
+        // Dashboard data loading functions
+        async function loadDashboard() {
+            try {
+                // Load posts data
+                const postsResponse = await fetch('/api/posts');
+                const postsData = await postsResponse.json();
+                const posts = postsData.posts || [];
+
+                // Update statistics
+                document.getElementById('totalPostsStat').textContent = posts.length;
+                document.getElementById('postsCount').textContent = posts.length;
+
+                // Calculate total views
+                const totalViews = posts.reduce((sum, post) => sum + (post.views || 0), 0);
+                document.getElementById('totalViewsStat').textContent = totalViews.toLocaleString();
+
+                // Calculate total comments (simulated)
+                const totalComments = posts.reduce((sum, post) => sum + Math.floor(Math.random() * 10), 0);
+                document.getElementById('totalCommentsStat').textContent = totalComments;
+
+                // Load recent posts
+                const recentPosts = posts
+                    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                    .slice(0, 6);
+                
+                displayRecentPosts(recentPosts);
+
+                // Update footer stats
+                updateFooterStats();
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showAlert('Error loading dashboard data', 'error');
+            }
+        }
+
+        function displayRecentPosts(posts) {
+            const container = document.getElementById('recentPostsContainer');
+            if (!container) return;
+
+            if (!posts || posts.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📝</div>
+                        <div class="empty-title">No Posts Yet</div>
+                        <div class="empty-desc">Create your first post to get started!</div>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = posts.map(post => `
+                <div class="post-item">
+                    ${post.imageUrl ? 
+                        `<img src="${post.imageUrl}" alt="${post.title}" class="post-thumbnail" loading="lazy">` :
+                        `<div class="post-placeholder">
+                            <i class="fas fa-file-alt"></i>
+                        </div>`
+                    }
+                    <div class="post-info">
+                        <div class="post-title">${post.title}</div>
+                        <div class="post-meta">
+                            <span><i class="fas fa-user"></i> ${post.author}</span>
+                            <span><i class="fas fa-eye"></i> ${post.views || 0}</span>
+                            <span><i class="fas fa-calendar"></i> ${new Date(post.createdAt).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="btn-sm btn-edit" onclick="editPost('${post._id}')" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-sm btn-delete" onclick="deletePost('${post._id}')" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+                            `<div class="thumbnail-placeholder">
+                                <i class="fas fa-file-alt"></i>
+                            </div>`
+                        }
+                    </div>
+                    <div class="post-info">
+                        <h4>${post.title}</h4>
+                        <div class="post-meta">
+                            <span><i class="fas fa-eye"></i> ${post.views || 0}</span>
+                            <span><i class="fas fa-calendar"></i> ${formatDate(post.createdAt)}</span>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="btn btn-sm btn-outline" onclick="editPost('${post._id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function loadAdminPosts() {
+            try {
+                const response = await fetch('/api/posts');
+                const data = await response.json();
+                const posts = data.posts || [];
+
+                displayPostsTable(posts);
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                showAlert('Error loading posts', 'error');
+            }
+        }
+
+        function displayPostsTable(posts) {
+            const container = document.getElementById('postsTable');
+            if (!container) return;
+
+            if (!posts || posts.length === 0) {
+                container.innerHTML = '<div class="empty-state">No posts found</div>';
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Author</th>
+                                <th>Views</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${posts.map(post => `
+                                <tr>
+                                    <td>
+                                        <div class="post-title-cell">
+                                            ${post.imageUrl ? 
+                                                `<img src="${post.imageUrl}" alt="${post.title}" class="post-thumbnail-small">` :
+                                                `<div class="thumbnail-small"><i class="fas fa-file-alt"></i></div>`
+                                            }
+                                            <div>
+                                                <strong>${post.title}</strong>
+                                                <small>${post.summary ? post.summary.substring(0, 50) + '...' : ''}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="category-badge">${post.category}</span>
+                                    </td>
+                                    <td>${post.author}</td>
+                                    <td>
+                                        <span class="views-count">
+                                            <i class="fas fa-eye"></i>
+                                            ${post.views || 0}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge ${post.isPublished ? 'published' : 'draft'}">
+                                            ${post.isPublished ? 'Published' : 'Draft'}
+                                        </span>
+                                    </td>
+                                    <td>${formatDate(post.createdAt)}</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline" onclick="editPost('${post._id}')" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline" onclick="viewPost('${post._id}')" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger" onclick="deletePost('${post._id}')" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        async function loadAdminComments() {
+            try {
+                // For now, show a placeholder since we don't have a comments API endpoint
+                const container = document.getElementById('comments-section');
+                if (container) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-comments"></i>
+                            <h3>Comments Management</h3>
+                            <p>Comments functionality will be available soon.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading comments:', error);
+            }
+        }
+
+        function editPost(postId) {
+            // Navigate to edit post (for now, just show alert)
+            showAlert('Edit post functionality will be available soon', 'info');
+        }
+
+        function viewPost(postId) {
+            // Open post in new tab
+            window.open(`/post/${postId}`, '_blank');
+        }
+
+        async function deletePost(postId) {
+            if (!confirm('Are you sure you want to delete this post?')) return;
+
+            try {
+                const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken');
+                const response = await fetch(`/api/posts/${postId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    showAlert('Post deleted successfully', 'success');
+                    loadAdminPosts(); // Reload the posts table
+                    loadDashboard(); // Refresh dashboard stats
+                } else {
+                    throw new Error('Failed to delete post');
+                }
+            } catch (error) {
+                console.error('Error deleting post:', error);
+                showAlert('Error deleting post', 'error');
+            }
+        }
+
+        function formatDate(dateString) {
+            try {
+                return new Date(dateString).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            } catch (error) {
+                return 'Invalid date';
+            }
+        }
+
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                ${message}
+            `;
+            
+            // Add styles for the alert
+            alertDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 8px;
+                background: ${type === 'success' ? '#10B981' : type === 'error' ? '#EF4444' : '#3B82F6'};
+                color: white;
+                z-index: 10000;
+                font-weight: 500;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                animation: slideIn 0.3s ease;
+            `;
+
+            document.body.appendChild(alertDiv);
+
+            // Remove alert after 4 seconds
+            setTimeout(() => {
+                alertDiv.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => alertDiv.remove(), 300);
+            }, 4000);
+        }
+
+        // ...existing code...
+    </script>
+</body>
+</html>

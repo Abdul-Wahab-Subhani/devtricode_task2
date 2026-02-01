@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - Professional Blog</title>
+    <meta name="description" content="Secure admin portal for Professional Blog content management">
+    <link rel="stylesheet" href="/css/style-new.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="admin-login-page">
+    <div class="admin-login-container">
+        <!-- Professional Background -->
+        <div class="admin-login-background">
+            <div class="background-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+            <div class="background-overlay"></div>
+        </div>
+
+        <!-- Main Login Card -->
+        <div class="admin-login-wrapper">
+            <div class="admin-login-card">
+                <!-- Header Section -->
+                <div class="admin-login-header">
+                    <div class="admin-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-feather-alt"></i>
+                        </div>
+                        <h1 class="logo-text">Professional Blog</h1>
+                    </div>
+                    <div class="admin-title">
+                        <h2>Admin Portal</h2>
+                        <p>Secure access to content management dashboard</p>
+                    </div>
+                </div>
+
+                <!-- Login Form -->
+                <form class="admin-login-form" id="adminLoginForm">
+                    <div class="form-group">
+                        <label for="username" class="form-label">
+                            <i class="fas fa-user"></i>
+                            Username
+                        </label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                id="username" 
+                                class="form-input" 
+                                placeholder="Enter your username" 
+                                required
+                                autocomplete="username"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            <i class="fas fa-lock"></i>
+                            Password
+                        </label>
+                        <div class="input-wrapper password-wrapper">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                class="form-input" 
+                                placeholder="Enter your password" 
+                                required
+                                autocomplete="current-password"
+                            >
+                            <button 
+                                type="button" 
+                                class="password-toggle" 
+                                onclick="togglePasswordVisibility()"
+                                aria-label="Toggle password visibility"
+                            >
+                                <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="admin-login-btn" id="loginButton">
+                            <span class="btn-text">
+                                <i class="fas fa-sign-in-alt"></i>
+                                Sign In to Dashboard
+                            </span>
+                            <span class="btn-loading" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                Authenticating...
+                            </span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Security Info -->
+                <div class="admin-security-info">
+                    <div class="security-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure Login</span>
+                    </div>
+                    <p class="security-text">Your connection is encrypted and secure</p>
+                </div>
+
+                <!-- Footer Links -->
+                <div class="admin-login-footer">
+                    <a href="/" class="back-to-blog">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back to Blog</span>
+                    </a>
+                    <div class="demo-info">
+                        <i class="fas fa-info-circle"></i>
+                        <small>Demo: admin / admin123</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert System -->
+            <div id="adminAlert" class="admin-alert" style="display: none;">
+                <div class="alert-content">
+                    <i class="alert-icon"></i>
+                    <span class="alert-message"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Professional Login JavaScript
+        class AdminLogin {
+            constructor() {
+                this.form = document.getElementById('adminLoginForm');
+                this.loginButton = document.getElementById('loginButton');
+                this.initializeEventListeners();
+            }
+
+            initializeEventListeners() {
+                this.form.addEventListener('submit', this.handleLogin.bind(this));
+                
+                // Add input focus effects
+                document.querySelectorAll('.form-input').forEach(input => {
+                    input.addEventListener('focus', this.handleInputFocus);
+                    input.addEventListener('blur', this.handleInputBlur);
+                });
+            }
+
+            handleInputFocus(e) {
+                e.target.parentElement.classList.add('focused');
+            }
+
+            handleInputBlur(e) {
+                if (!e.target.value) {
+                    e.target.parentElement.classList.remove('focused');
+                }
+            }
+
+            async handleLogin(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+
+                if (!username || !password) {
+                    this.showAlert('Please fill in all fields', 'error');
+                    return;
+                }
+
+                this.setLoadingState(true);
+
+                try {
+                    const response = await fetch('/api/admin/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ username, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        localStorage.setItem('authToken', data.token);
+                        this.showAlert('Login successful! Redirecting...', 'success');
+                        
+                        setTimeout(() => {
+                            window.location.href = '/admin/dashboard';
+                        }, 1500);
+                    } else {
+                        this.showAlert(data.message || 'Login failed. Please try again.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    this.showAlert('Network error. Please check your connection.', 'error');
+                } finally {
+                    this.setLoadingState(false);
+                }
+            }
+
+            setLoadingState(isLoading) {
+                const btnText = this.loginButton.querySelector('.btn-text');
+                const btnLoading = this.loginButton.querySelector('.btn-loading');
+
+                if (isLoading) {
+                    btnText.style.display = 'none';
+                    btnLoading.style.display = 'flex';
+                    this.loginButton.disabled = true;
+                    this.loginButton.classList.add('loading');
+                } else {
+                    btnText.style.display = 'flex';
+                    btnLoading.style.display = 'none';
+                    this.loginButton.disabled = false;
+                    this.loginButton.classList.remove('loading');
+                }
+            }
+
+            showAlert(message, type) {
+                const alertElement = document.getElementById('adminAlert');
+                const alertIcon = alertElement.querySelector('.alert-icon');
+                const alertMessage = alertElement.querySelector('.alert-message');
+
+                // Set icon based on type
+                if (type === 'success') {
+                    alertIcon.className = 'alert-icon fas fa-check-circle';
+                } else if (type === 'error') {
+                    alertIcon.className = 'alert-icon fas fa-exclamation-circle';
+                } else {
+                    alertIcon.className = 'alert-icon fas fa-info-circle';
+                }
+
+                alertMessage.textContent = message;
+                alertElement.className = `admin-alert alert-${type}`;
+                alertElement.style.display = 'block';
+
+                // Auto hide after 5 seconds
+                setTimeout(() => {
+                    alertElement.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Password visibility toggle
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.className = 'fas fa-eye';
+            }
+        }
+
+        // Check if already logged in
+        function checkExistingAuth() {
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                // Verify token is still valid
+                fetch('/api/admin/verify', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/admin/dashboard';
+                    }
+                })
+                .catch(() => {
+                    localStorage.removeItem('authToken');
+                });
+            }
+        }
+
+        // Initialize login system
+        document.addEventListener('DOMContentLoaded', () => {
+            checkExistingAuth();
+            new AdminLogin();
+        });
+    </script>
+</body>
+</html>

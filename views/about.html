@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Professional Blog</title>
+    <meta name="description" content="Learn more about our professional blog, our mission, and our team.">
+    <link rel="stylesheet" href="/css/style-new.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-feather-alt"></i>
+                    <a href="/">Professional Blog</a>
+                </div>
+                <div class="nav-links">
+                    <a href="/" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                    <a href="/categories.html" class="nav-link">
+                        <i class="fas fa-tags"></i>
+                        Categories
+                    </a>
+                    <a href="/about.html" class="nav-link active">
+                        <i class="fas fa-user"></i>
+                        About
+                    </a>
+                    <div class="nav-dropdown">
+                        <a href="#" class="nav-link admin-link" onclick="handleAdminAccess(event)">
+                            <i class="fas fa-cog"></i>
+                            Admin
+                            <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="/adminLogin.html" class="dropdown-item">
+                                <i class="fas fa-sign-in-alt"></i>
+                                Login
+                            </a>
+                            <a href="/admin/dashboard" class="dropdown-item" id="dashboardLink" style="display: none;">
+                                <i class="fas fa-tachometer-alt"></i>
+                                Dashboard
+                            </a>
+                            <a href="#" class="dropdown-item" id="logoutLink" style="display: none;" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <!-- Hero Section with Modern Design -->
+        <section class="about-hero">
+            <div class="hero-background">
+                <div class="gradient-overlay"></div>
+                <div class="floating-elements">
+                    <div class="float-element element-1"></div>
+                    <div class="float-element element-2"></div>
+                    <div class="float-element element-3"></div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">
+                            Crafting Stories That 
+                            <span class="highlight">Inspire</span> & 
+                            <span class="highlight">Educate</span>
+                        </h1>
+                        <p class="hero-description">
+                            We're a team of passionate writers, developers, and thinkers dedicated to sharing 
+                            knowledge that empowers professionals and sparks innovation across industries.
+                        </p>
+                        <div class="hero-stats">
+                            <div class="hero-stat">
+                                <span class="stat-number">50K+</span>
+                                <span class="stat-label">Monthly Readers</span>
+                            </div>
+                            <div class="hero-stat">
+                                <span class="stat-number">500+</span>
+                                <span class="stat-label">Articles</span>
+                            </div>
+                            <div class="hero-stat">
+                                <span class="stat-number">25+</span>
+                                <span class="stat-label">Countries</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="visual-card">
+                            <div class="card-header">
+                                <div class="card-dots">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <span class="card-title">Our Impact</span>
+                            </div>
+                            <div class="card-content">
+                                <div class="impact-item">
+                                    <i class="fas fa-rocket"></i>
+                                    <span>Innovation Driven</span>
+                                </div>
+                                <div class="impact-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>Community Focused</span>
+                                </div>
+                                <div class="impact-item">
+                                    <i class="fas fa-globe"></i>
+                                    <span>Global Reach</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission & Vision Section -->
+        <section class="mission-section">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-badge">Our Purpose</span>
+                    <h2 class="section-title">Mission & Vision</h2>
+                    <p class="section-subtitle">
+                        Driving positive change through quality content and meaningful connections
+                    </p>
+                </div>
+                
+                <div class="mission-grid">
+                    <div class="mission-card">
+                        <div class="card-icon mission-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3>Our Mission</h3>
+                        <p>
+                            To democratize access to professional knowledge and create a platform where expertise 
+                            meets accessibility, fostering growth and learning in our global community of professionals.
+                        </p>
+                        <ul class="mission-points">
+                            <li><i class="fas fa-check"></i>Quality-first content creation</li>
+                            <li><i class="fas fa-check"></i>Accessible expert knowledge</li>
+                            <li><i class="fas fa-check"></i>Community-driven discussions</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mission-card">
+                        <div class="card-icon vision-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3>Our Vision</h3>
+                        <p>
+                            To become the leading platform for professional development and knowledge sharing, 
+                            inspiring millions of individuals to achieve their career goals and drive innovation.
+                        </p>
+                        <ul class="mission-points">
+                            <li><i class="fas fa-check"></i>Global thought leadership</li>
+                            <li><i class="fas fa-check"></i>Sustainable learning ecosystem</li>
+                            <li><i class="fas fa-check"></i>Technology-driven insights</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values Section -->
+        <section class="values-section">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-badge">What Drives Us</span>
+                    <h2 class="section-title">Our Core Values</h2>
+                </div>
+                
+                <div class="values-grid">
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h4>Excellence</h4>
+                        <p>We maintain the highest standards in content quality, research, and user experience.</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h4>Integrity</h4>
+                        <p>Transparency, honesty, and ethical practices guide every decision we make.</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4>Innovation</h4>
+                        <p>We embrace new ideas, technologies, and approaches to enhance learning experiences.</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4>Empathy</h4>
+                        <p>We understand our readers' challenges and create content that truly serves their needs.</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Community</h4>
+                        <p>We foster an inclusive environment where diverse perspectives are valued and heard.</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h4>Growth</h4>
+                        <p>We're committed to continuous learning and helping our community grow professionally.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="team-section">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-badge">Meet the Developer</span>
+                    <h2 class="section-title">The Mind Behind the Platform</h2>
+                    <p class="section-subtitle">
+                        A dedicated software engineer passionate about creating exceptional digital experiences
+                    </p>
+                </div>
+                
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-card">
+                            <div class="member-avatar">
+                                <img src="/images/abdul-wahab-subhani.png" alt="Abdul Wahab Subhani" class="member-photo">
+                                <div class="member-overlay">
+                                    <div class="member-social">
+                                        <a href="https://www.linkedin.com/in/abdul-wahab-subhani-0b2018321/" target="_blank" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                                        <a href="https://github.com/Abdul-Wahab-Subhani" target="_blank" class="social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                                        <a href="mailto:abdulwahabsubhani2003@gmail.com" class="social-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="member-info">
+                                <h3 class="member-name">Abdul Wahab Subhani</h3>
+                                <p class="member-role">Lead Developer</p>
+                                <p class="member-bio">
+                                    Abdul Wahab is a skilled Lead Developer and Software Engineering student at the University of Central Punjab, 
+                                    specializing in full-stack web development and creating innovative digital solutions that enhance user experiences.
+                                </p>
+                                <div class="member-expertise">
+                                    <span class="expertise-tag">Full-Stack Development</span>
+                                    <span class="expertise-tag">Software Engineering</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section with Animation -->
+        <section class="achievement-section">
+            <div class="container">
+                <div class="achievement-content">
+                    <div class="achievement-text">
+                        <span class="section-badge">Our Impact</span>
+                        <h2 class="section-title">Growing Together</h2>
+                        <p class="achievement-description">
+                            Our success is measured by the growth and success of our community. 
+                            Here's how we're making a difference together.
+                        </p>
+                        <div class="achievement-features">
+                            <div class="feature-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Consistent growth in readership and engagement</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-award"></i>
+                                <span>Industry recognition for content quality</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-network-wired"></i>
+                                <span>Strong community of professionals worldwide</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-showcase">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number" data-target="50000">0</div>
+                                    <div class="stat-label">Monthly Readers</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number" data-target="500">0</div>
+                                    <div class="stat-label">Published Articles</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number" data-target="10000">0</div>
+                                    <div class="stat-label">Community Discussions</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number" data-target="25">0</div>
+                                    <div class="stat-label">Countries Reached</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <div class="cta-text">
+                        <h2 class="cta-title">Ready to Join Our Community?</h2>
+                        <p class="cta-description">
+                            Whether you're looking to learn, share knowledge, or collaborate on exciting projects, 
+                            we'd love to connect with you and hear your story.
+                        </p>
+                    </div>
+                    <div class="cta-actions">
+                        <a href="mailto:hello@professionalblog.com" class="btn btn-primary btn-lg">
+                            <i class="fas fa-envelope"></i>
+                            Get In Touch
+                        </a>
+                        <a href="/" class="btn btn-outline btn-lg">
+                            <i class="fas fa-arrow-left"></i>
+                            Explore Articles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-feather-alt"></i>
+                        <span>Professional Blog</span>
+                    </div>
+                    <p class="footer-desc">
+                        A platform for sharing knowledge, insights, and innovative ideas in technology and beyond.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="RSS Feed"><i class="fas fa-rss"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/categories.html">Categories</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/adminLogin.html">Admin</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/categories.html?category=technology">Technology</a></li>
+                        <li><a href="/categories.html?category=development">Development</a></li>
+                        <li><a href="/categories.html?category=business">Business</a></li>
+                        <li><a href="/categories.html?category=design">Design</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-envelope"></i> hello@professionalblog.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> San Francisco, CA</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Professional Blog. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+    <script>
+        // Enhanced statistics animation with intersection observer
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            
+            stats.forEach(stat => {
+                const target = parseInt(stat.getAttribute('data-target'));
+                const duration = 2000; // 2 seconds
+                const increment = target / (duration / 16); // 60fps
+                let current = 0;
+                
+                const updateStat = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (current > target) current = target;
+                        
+                        // Format number with commas for readability
+                        stat.textContent = Math.floor(current).toLocaleString();
+                        requestAnimationFrame(updateStat);
+                    } else {
+                        stat.textContent = target.toLocaleString();
+                    }
+                };
+                
+                updateStat();
+            });
+        }
+
+        // Intersection observer for stats animation
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.animated) {
+                    animateStats();
+                    entry.target.dataset.animated = 'true';
+                }
+            });
+        }, { threshold: 0.5 });
+
+        // Observe stats section
+        document.addEventListener('DOMContentLoaded', () => {
+            const statsSection = document.querySelector('.achievement-section');
+            if (statsSection) {
+                statsObserver.observe(statsSection);
+            }
+
+            // Add scroll animations for cards
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const cardObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animated elements
+            const animatedElements = document.querySelectorAll('.mission-card, .value-item, .team-member, .stat-card');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                cardObserver.observe(el);
+            });
+
+            // Stagger animation for team members
+            const teamMembers = document.querySelectorAll('.team-member');
+            teamMembers.forEach((member, index) => {
+                member.style.transitionDelay = `${index * 0.1}s`;
+            });
+
+            // Stagger animation for value items
+            const valueItems = document.querySelectorAll('.value-item');
+            valueItems.forEach((item, index) => {
+                item.style.transitionDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroBackground = document.querySelector('.hero-background');
+            
+            if (heroBackground) {
+                heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+
+            // Floating elements animation based on scroll
+            const floatElements = document.querySelectorAll('.float-element');
+            floatElements.forEach((element, index) => {
+                const speed = 0.3 + (index * 0.1);
+                element.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
+            });
+        });
+
+        // Enhanced team member interactions
+        document.querySelectorAll('.team-member').forEach(member => {
+            member.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            member.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-5px) scale(1)';
+            });
+        });
+
+        // Add dynamic gradient effect to hero
+        let gradientAngle = 135;
+        setInterval(() => {
+            gradientAngle += 0.5;
+            const hero = document.querySelector('.about-hero');
+            if (hero && window.scrollY < window.innerHeight) {
+                hero.style.background = `linear-gradient(${gradientAngle}deg, #667eea 0%, #764ba2 100%)`;
+            }
+        }, 100);
+
+        // Loading animation for page
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
